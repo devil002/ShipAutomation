@@ -12,6 +12,8 @@ TinyGPSPlus gps;
 SoftwareSerial ss(RXPin, TXPin);
 
 //JSN-SR04T Depth Sensor pins
+// SCL = D1
+// SDA = D2
 #define TRIG 14 //Module pins
 #define ECHO 12 
 
@@ -92,20 +94,20 @@ void loop()
       } else {
         Serial.print("GPS data not valid: ");
         // DEBUG
-        //Serial.print(gps.location.lat(), 6);
-        //Serial.print(" ");
-        //Serial.print(gps.location.lng(), 6);
-        //Serial.print(" ");
-        //Serial.println(gps.location.isValid());
+        Serial.print(gps.location.lat(), 6);
+        Serial.print(" ");
+        Serial.print(gps.location.lng(), 6);
+        Serial.print(" ");
+        Serial.println(gps.location.isValid());
       }
     }
   }
   JSN_mod();
   Gyro_mod();
-  String logtxt = String(distance)+","+convert_int16_to_str(a_x)+","+convert_int16_to_str(a_y)+","+convert_int16_to_str(a_z)+","+temperature+","+convert_int16_to_str(gyro_x)+","+convert_int16_to_str(gyro_y)+","+convert_int16_to_str(gyro_z);
+  String logtxt = latt+","+lngt+","+String(distance)+","+convert_int16_to_str(a_x)+","+convert_int16_to_str(a_y)+","+convert_int16_to_str(a_z)+","+temperature+","+convert_int16_to_str(gyro_x)+","+convert_int16_to_str(gyro_y)+","+convert_int16_to_str(gyro_z);
   writetosd("/test.txt",logtxt.c_str());
-
-  //delay(1000);
+  Serial.println(logtxt);
+  delay(1000);
 }
 
 void Gyro_mod() {
